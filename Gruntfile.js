@@ -1,3 +1,6 @@
+var webpack = require('webpack');
+var path = require('path');
+
 module.exports = function(grunt) {
   require('jit-grunt')(grunt, {});
 
@@ -67,6 +70,28 @@ module.exports = function(grunt) {
           'build/server/**/__test__/*.spec.js'
         ],
       }
+    },
+    webpack: {
+      options: {
+        resolve: {
+          extensions: [
+            ".js"
+          ]
+        },
+        devtool: "source-map"
+      },
+      client: {
+        entry: './build/client/javascript/index.js',
+        output: {
+          path: path.join(__dirname, 'build/server/static/javascript'),
+          filename: '[name].js',
+          sourceMapFilename: '[name].js.map'
+        },
+        plugins: [
+          new webpack.ProvidePlugin({
+          })
+        ]
+      }
     }
   });
   
@@ -79,7 +104,8 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build:client', [
-    'babel:client'
+    'babel:client',
+    'webpack:client'
   ]);
   grunt.registerTask('test:client', [
     'run-once:build:client',
