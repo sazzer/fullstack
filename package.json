@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "Setting up a Full Stack Webapp project in Node from scratch",
   "author": "Graham Cox",
+  "scripts": {
+      "install": "grunt build",
+      "test": "grunt test",
+      "start": "grunt start"
+  },
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-run-once": "^0.2.2",
