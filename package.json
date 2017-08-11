@@ -2,5 +2,10 @@
   "name": "fullstack",
   "version": "1.0.0",
   "description": "Setting up a Full Stack Webapp project in Node from scratch",
-  "author": "Graham Cox"
+  "author": "Graham Cox",
+  "devDependencies": {
+    "grunt": "^1.0.1",
+    "grunt-run-once": "^0.2.2",
+    "jit-grunt": "^0.10.0"
+  }
 }
