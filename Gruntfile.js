@@ -39,6 +39,34 @@ module.exports = function(grunt) {
           dest: 'build/server'
         }]
       }
+    },
+    mochaTest: {
+      options: {
+        reporter: 'spec',
+        quiet: false,
+        growl: true,
+        clearRequireCache: true
+      },
+      client: {
+        options: {
+          require: [
+            './build/client/javascript/testSupport'
+          ]
+        },
+        src: [
+          'build/client/javascript/**/__test__/*.spec.js'
+        ],
+      },
+      server: {
+        options: {
+          require: [
+            './build/server/testSupport'
+          ]
+        },
+        src: [
+          'build/server/**/__test__/*.spec.js'
+        ],
+      }
     }
   });
   
@@ -46,14 +74,16 @@ module.exports = function(grunt) {
     'babel:server'
   ]);
   grunt.registerTask('test:server', [
-    'run-once:build:server'
+    'run-once:build:server',
+    'mochaTest:server'
   ]);
 
   grunt.registerTask('build:client', [
     'babel:client'
   ]);
   grunt.registerTask('test:client', [
-    'run-once:build:client'
+    'run-once:build:client',
+    'mochaTest:client'
   ]);
   
   grunt.registerTask('build', [
