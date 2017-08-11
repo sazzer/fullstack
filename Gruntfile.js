@@ -71,6 +71,18 @@ module.exports = function(grunt) {
         ],
       }
     },
+    sass: {
+      options: {
+        sourcemap: 'auto',
+        style: 'nested',
+        cacheLocation: 'build/sass-cache'
+      },
+      client: {
+        files: {
+          'build/server/static//css/main.css': 'src/client/scss/main.scss'
+        }
+      }
+    },
     webpack: {
       options: {
         resolve: {
@@ -105,7 +117,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build:client', [
     'babel:client',
-    'webpack:client'
+    'webpack:client',
+    'sass:client'
   ]);
   grunt.registerTask('test:client', [
     'run-once:build:client',
