@@ -43,6 +43,16 @@ module.exports = function(grunt) {
         }]
       }
     },
+    copy: {
+      client: {
+        files: [{
+          expand: true,
+          cwd: 'src/client/static',
+          src: ['**/*'],
+          dest: 'build/server/static'
+        }]
+      }
+    },
     mochaTest: {
       options: {
         reporter: 'spec',
@@ -118,7 +128,8 @@ module.exports = function(grunt) {
   grunt.registerTask('build:client', [
     'babel:client',
     'webpack:client',
-    'sass:client'
+    'sass:client',
+    'copy:client'
   ]);
   grunt.registerTask('test:client', [
     'run-once:build:client',
