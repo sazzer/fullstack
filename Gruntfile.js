@@ -2,7 +2,9 @@ var webpack = require('webpack');
 var path = require('path');
 
 module.exports = function(grunt) {
-  require('jit-grunt')(grunt, {});
+  require('jit-grunt')(grunt, {
+    express: 'grunt-express-server'
+  });
 
   // Keep the plugins in alphabetical order
   grunt.initConfig({
@@ -51,6 +53,37 @@ module.exports = function(grunt) {
           src: ['**/*'],
           dest: 'build/server/static'
         }]
+      }
+    },
+    eslint: {
+      options: {
+        "configFile": ".eslintrc"
+      },
+      server: {
+        "files": [{
+          "expand": true,
+          "src": ["src/server/javascript"]
+        }, {
+          "expand": true,
+          "src": ["src/common/javascript"]
+        }]
+      },
+      client: {
+        "files": [{
+          "expand": true,
+          "src": ["src/client/javascript"]
+        }, {
+          "expand": true,
+          "src": ["src/common/javascript"]
+        }]
+      }
+    },
+    express: {
+      server: {
+        options: {
+          script: 'build/server/index.js',
+          background: false
+        }
       }
     },
     mochaTest: {
@@ -118,7 +151,8 @@ module.exports = function(grunt) {
   });
   
   grunt.registerTask('build:server', [
-    'babel:server'
+    'babel:server',
+    'eslint:server'
   ]);
   grunt.registerTask('test:server', [
     'run-once:build:server',
@@ -127,6 +161,7 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build:client', [
     'babel:client',
+    'eslint:client',
     'webpack:client',
     'sass:client',
     'copy:client'
@@ -146,7 +181,8 @@ module.exports = function(grunt) {
   ]);
   
   grunt.registerTask('start', [
-    'build'
+    'build',
+    'express:server'
   ]);
   
   grunt.registerTask('default', [
